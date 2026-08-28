@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Trip Expense Management</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom py-3">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="dashboard.html">
+                <i class="fas fa-plane-departure text-warning"></i>
+                <span>TripSplitter</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto ms-4">
+                    <li class="nav-item"><a class="nav-link active" href="dashboard.html"><i class="fas fa-chart-pie me-1"></i>Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="create-trip.html"><i class="fas fa-plus-circle me-1"></i>Create Trip</a></li>
+                </ul>
+                <div class="d-flex align-items-center gap-3">
+                    <span class="text-white fw-semibold">
+                        <i class="fas fa-user-circle text-warning me-1"></i><span id="nav-user-name">User</span>
+                    </span>
+                    <button id="logout-btn" class="btn btn-outline-light btn-sm px-3 rounded-pill">
+                        <i class="fas fa-sign-out-alt me-1"></i>Logout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Container -->
+    <div class="container py-4">
+        <!-- Dashboard Banner Card with Travel Image Backdrop -->
+        <div class="card card-custom p-0 mb-4 border-0 shadow-lg position-relative text-white overflow-hidden" style="background-image: url('images/switzerland.jpg'); background-size: cover; background-position: center; min-height: 180px;">
+            <div class="p-4 p-md-5 w-100 h-100 d-flex justify-content-between align-items-center flex-wrap gap-3" style="background: linear-gradient(to right, rgba(15,23,42,0.85) 0%, rgba(15,23,42,0.4) 100%);">
+                <div>
+                    <span class="badge bg-warning text-dark fw-bold mb-2"><i class="fas fa-globe-americas me-1"></i>World Destinations</span>
+                    <h2 class="fw-bold mb-1">Welcome back, <span id="welcome-user-name" class="text-warning">User</span>! 👋</h2>
+                    <p class="text-light opacity-90 mb-0">Track and split expenses across Paris, Switzerland, Beaches & Holy Pilgrimages.</p>
+                </div>
+                <div>
+                    <a href="create-trip.html" class="btn btn-warning btn-lg fw-bold px-4 shadow">
+                        <i class="fas fa-plus-circle me-2"></i>Create New Trip
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Metrics Cards Grid -->
+        <div class="row g-3 mb-4">
+            <div class="col-md-4 col-lg-2">
+                <div class="stat-card">
+                    <div class="stat-label">Total Trips</div>
+                    <div class="stat-value text-primary" id="stat-total-trips">0</div>
+                </div>
+            </div>
+            <div class="col-md-4 col-lg-2">
+                <div class="stat-card">
+                    <div class="stat-label">Active Trips</div>
+                    <div class="stat-value text-info" id="stat-active-trips">0</div>
+                </div>
+            </div>
+            <div class="col-md-4 col-lg-2">
+                <div class="stat-card">
+                    <div class="stat-label">Total Expenses</div>
+                    <div class="stat-value text-dark" id="stat-total-expenses">₹0</div>
+                </div>
+            </div>
+            <div class="col-md-4 col-lg-2">
+                <div class="stat-card stat-paid">
+                    <div class="stat-label">You Paid</div>
+                    <div class="stat-value text-success" id="stat-amount-paid">₹0</div>
+                </div>
+            </div>
+            <div class="col-md-4 col-lg-2">
+                <div class="stat-card stat-owe">
+                    <div class="stat-label">You Owe</div>
+                    <div class="stat-value text-danger" id="stat-amount-owe">₹0</div>
+                </div>
+            </div>
+            <div class="col-md-4 col-lg-2">
+                <div class="stat-card stat-receive">
+                    <div class="stat-label">To Receive</div>
+                    <div class="stat-value text-secondary" id="stat-amount-receive">₹0</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content Grid: Recent Trips & Recent Expenses -->
+        <div class="row g-4">
+            <!-- Recent Trips -->
+            <div class="col-lg-6">
+                <div class="card card-custom h-100 p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h4 class="fw-bold mb-0"><i class="fas fa-map-marked-alt text-primary me-2"></i>Your Trips</h4>
+                        <a href="create-trip.html" class="btn btn-sm btn-outline-primary fw-semibold">+ Add Trip</a>
+                    </div>
+                    <div id="recent-trips-container">
+                        <div class="text-center py-4 text-muted">
+                            <div class="spinner-border text-primary" role="status"></div>
+                            <p class="mt-2">Loading trips...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Expenses -->
+            <div class="col-lg-6">
+                <div class="card card-custom h-100 p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h4 class="fw-bold mb-0"><i class="fas fa-receipt text-warning me-2"></i>Recent Expenses</h4>
+                    </div>
+                    <div id="recent-expenses-container">
+                        <div class="text-center py-4 text-muted">
+                            <div class="spinner-border text-primary" role="status"></div>
+                            <p class="mt-2">Loading expenses...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center py-4 mt-5">
+        <div class="container">
+            <p class="mb-0">&copy; 2026 TripSplitter App. Built with Flask & Bootstrap 5.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

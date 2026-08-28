@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - Trip Expense Management</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-light">
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom py-3">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="dashboard.html">
+                <i class="fas fa-plane-departure text-warning"></i>
+                <span>TripSplitter</span>
+            </a>
+            <div class="d-flex align-items-center gap-3">
+                <a href="dashboard.html" class="btn btn-outline-light btn-sm px-3 rounded-pill">
+                    <i class="fas fa-arrow-left me-1"></i>Dashboard
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Profile Container -->
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card card-custom p-4 p-md-5 text-center shadow-lg border-0">
+                    <div class="avatar bg-primary text-white rounded-circle mx-auto d-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px; font-size: 2rem; font-weight: bold;">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <h3 class="fw-bold mb-1" id="profile-name">User Name</h3>
+                    <p class="text-muted mb-4" id="profile-email">user@example.com</p>
+
+                    <hr>
+
+                    <div class="text-start mb-4">
+                        <h6 class="fw-bold text-uppercase text-muted small">Account Information</h6>
+                        <p class="mb-1"><strong>Status:</strong> <span class="badge bg-success">Active</span></p>
+                        <p class="mb-1"><strong>Authentication:</strong> JWT Token Secured</p>
+                        <p class="mb-0"><strong>Role:</strong> Trip Manager</p>
+                    </div>
+
+                    <a href="dashboard.html" class="btn btn-primary-custom w-100">
+                        <i class="fas fa-home me-2"></i>Go to Dashboard
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const userJson = localStorage.getItem('user');
+            if (userJson) {
+                const user = JSON.parse(userJson);
+                document.getElementById('profile-name').textContent = user.name;
+                document.getElementById('profile-email').textContent = user.email;
+            }
+        });
+    </script>
+</body>
+</html>

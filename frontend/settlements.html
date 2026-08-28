@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settlements - Trip Expense Management</title>
+    <script>
+        // Redirect to trip-details page with settlements tab active
+        const urlParams = new URLSearchParams(window.location.search);
+        const tripId = urlParams.get('id');
+        if (tripId) {
+            window.location.href = `trip-details.html?id=${tripId}#settlements-pane`;
+        } else {
+            window.location.href = 'dashboard.html';
+        }
+    </script>
+</head>
+<body>
+</body>
+</html>

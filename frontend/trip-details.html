@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trip Details - Trip Expense Management</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom py-3">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="dashboard.html">
+                <i class="fas fa-plane-departure text-warning"></i>
+                <span>TripSplitter</span>
+            </a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto ms-4">
+                    <li class="nav-item"><a class="nav-link" href="dashboard.html"><i class="fas fa-arrow-left me-1"></i>Back to Dashboard</a></li>
+                </ul>
+                <div class="d-flex align-items-center gap-3">
+                    <span class="text-white fw-semibold">
+                        <i class="fas fa-user-circle text-warning me-1"></i><span id="nav-user-name">User</span>
+                    </span>
+                    <button id="logout-btn" class="btn btn-outline-light btn-sm px-3 rounded-pill">
+                        <i class="fas fa-sign-out-alt me-1"></i>Logout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container py-4">
+        <!-- Trip Header Banner -->
+        <div class="trip-hero-banner mb-4 shadow-lg" id="trip-banner" style="background-image: url('images/mountains.jpg');">
+            <div class="trip-hero-overlay">
+                <div class="d-flex justify-content-between align-items-start flex-wrap gap-3">
+                    <div>
+                        <h1 class="fw-extrabold text-white mb-2" id="trip-title">Loading Trip...</h1>
+                        <p class="text-light mb-2 fs-6">
+                            <span class="badge bg-warning text-dark me-2" id="trip-destination"><i class="fas fa-map-marker-alt me-1"></i>Destination</span>
+                            <i class="fas fa-calendar-alt text-light me-1"></i><span id="trip-dates">Dates</span> |
+                            Created by <strong class="text-white" id="trip-creator">User</strong>
+                        </p>
+                        <p class="text-light opacity-75 small mb-0" id="trip-description"></p>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-warning fw-bold px-3 shadow" data-bs-toggle="modal" data-bs-target="#addExpenseModal">
+                            <i class="fas fa-plus-circle me-1"></i>Add Expense
+                        </button>
+                        <button class="btn btn-outline-light px-3 fw-semibold" data-bs-toggle="modal" data-bs-target="#addMemberModal">
+                            <i class="fas fa-user-plus me-1"></i>Add Member
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabs Navigation -->
+        <ul class="nav nav-tabs nav-fill mb-4 bg-white rounded p-1 border shadow-sm" id="tripTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active fw-bold py-3" id="expenses-tab" data-bs-toggle="tab" data-bs-target="#expenses-pane" type="button" role="tab">
+                    <i class="fas fa-receipt text-warning me-2"></i>Expenses List
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link fw-bold py-3" id="members-tab" data-bs-toggle="tab" data-bs-target="#members-pane" type="button" role="tab">
+                    <i class="fas fa-users text-info me-2"></i>Trip Members
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link fw-bold py-3" id="settlements-tab" data-bs-toggle="tab" data-bs-target="#settlements-pane" type="button" role="tab">
+                    <i class="fas fa-balance-scale text-success me-2"></i>Balances & Settlements
+                </button>
+            </li>
+        </ul>
+
+        <!-- Tab Contents -->
+        <div class="tab-content" id="tripTabsContent">
+            <!-- TAB 1: EXPENSES -->
+            <div class="tab-pane fade show active" id="expenses-pane" role="tabpanel">
+                <div class="card card-custom p-4">
+                    <!-- Filters Toolbar -->
+                    <div class="row g-3 mb-4 align-items-center">
+                        <div class="col-md-4">
+                            <div class="input-group">
+                                <span class="input-group-text bg-light"><i class="fas fa-search text-muted"></i></span>
+                                <input type="text" id="filter-search" class="form-control" placeholder="Search expense title or note...">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <select id="filter-category" class="form-select">
+                                <option value="All">All Categories</option>
+                                <option value="Food">Food</option>
+                                <option value="Travel">Travel</option>
+                                <option value="Hotel">Hotel</option>
+                                <option value="Shopping">Shopping</option>
+                                <option value="Entertainment">Entertainment</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <select id="filter-sort" class="form-select">
+                                <option value="date_desc">Date: Latest First</option>
+                                <option value="date_asc">Date: Oldest First</option>
+                                <option value="amount_desc">Amount: High to Low</option>
+                                <option value="amount_asc">Amount: Low to High</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Expenses Table -->
+                    <div id="expenses-list-container">
+                        <div class="text-center py-5">
+                            <div class="spinner-border text-primary" role="status"></div>
+                            <p class="mt-2 text-muted">Loading expenses...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 2: MEMBERS -->
+            <div class="tab-pane fade" id="members-pane" role="tabpanel">
+                <div class="card card-custom p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h4 class="fw-bold mb-0">Trip Members</h4>
+                        <button class="btn btn-sm btn-primary-custom" data-bs-toggle="modal" data-bs-target="#addMemberModal">
+                            <i class="fas fa-user-plus me-1"></i>+ Add Member
+                        </button>
+                    </div>
+                    <div id="members-list-container">
+                        <!-- Members grid loaded dynamically -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 3: SETTLEMENTS & CHARTS -->
+            <div class="tab-pane fade" id="settlements-pane" role="tabpanel">
+                <div class="row g-4 mb-4">
+                    <!-- Simplified Settlements Card -->
+                    <div class="col-lg-6">
+                        <div class="card card-custom p-4 h-100">
+                            <h4 class="fw-bold mb-3"><i class="fas fa-handshake text-success me-2"></i>Simplified Settlements</h4>
+                            <p class="text-muted small">Optimized transaction matrix to settle all group debts with minimum payments.</p>
+                            <div id="settlements-list-container">
+                                <!-- Settlements loaded dynamically -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Individual Member Balances Card -->
+                    <div class="col-lg-6">
+                        <div class="card card-custom p-4 h-100">
+                            <h4 class="fw-bold mb-3"><i class="fas fa-wallet text-primary me-2"></i>Member Balances</h4>
+                            <p class="text-muted small">Balance = Total Paid − Total Share</p>
+                            <div id="balances-table-container">
+                                <!-- Balances loaded dynamically -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Section -->
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <div class="card card-custom p-4">
+                            <h5 class="fw-bold mb-3"><i class="fas fa-chart-pie text-info me-2"></i>Expenses by Category</h5>
+                            <div style="height: 300px; position: relative;">
+                                <canvas id="categoryChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card card-custom p-4">
+                            <h5 class="fw-bold mb-3"><i class="fas fa-chart-bar text-warning me-2"></i>Paid vs Share Comparison</h5>
+                            <div style="height: 300px; position: relative;">
+                                <canvas id="memberChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 1: ADD / EDIT EXPENSE -->
+    <div class="modal fade" id="addExpenseModal" tabindex="-1" aria-labelledby="expenseModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title fw-bold" id="expenseModalLabel">Add New Expense</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="add-expense-form">
+                    <div class="modal-body">
+                        <input type="hidden" id="expense_id">
+
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Expense Title *</label>
+                            <input type="text" id="expense_title" class="form-control" placeholder="e.g. Hotel Stay, Dinner" required>
+                        </div>
+
+                        <div class="row g-2 mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Amount (₹) *</label>
+                                <input type="number" step="0.01" min="0.01" id="expense_amount" class="form-control" placeholder="0.00" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Category *</label>
+                                <select id="expense_category" class="form-select">
+                                    <option value="Food">Food</option>
+                                    <option value="Travel">Travel</option>
+                                    <option value="Hotel">Hotel</option>
+                                    <option value="Shopping">Shopping</option>
+                                    <option value="Entertainment">Entertainment</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row g-2 mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Paid By *</label>
+                                <select id="expense_paid_by" class="form-select" required>
+                                    <!-- Populated dynamically -->
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Date *</label>
+                                <input type="date" id="expense_date" class="form-control" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Shared By Members *</label>
+                            <div id="expense_shared_by_container" class="border rounded p-3 bg-light" style="max-height: 150px; overflow-y: auto;">
+                                <!-- Checkboxes populated dynamically -->
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Notes (Optional)</label>
+                            <textarea id="expense_notes" class="form-control" rows="2" placeholder="Additional details..."></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary-custom">Save Expense</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 2: ADD MEMBER -->
+    <div class="modal fade" id="addMemberModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-info text-white">
+                    <h5 class="modal-title fw-bold">Add Trip Member</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="add-member-form">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Member Name *</label>
+                            <input type="text" id="new_member_name" class="form-control" placeholder="Full Name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Member Email (Optional)</label>
+                            <input type="email" id="new_member_email" class="form-control" placeholder="friend@example.com">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-info text-white fw-bold">Add Member</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center py-4 mt-5">
+        <div class="container">
+            <p class="mb-0">&copy; 2026 TripSplitter App. Built with Flask & Bootstrap 5.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/trips.js"></script>
+    <script src="js/expenses.js"></script>
+    <script src="js/settlements.js"></script>
+
+    <script>
+        // Set default date picker value to today
+        document.getElementById('expense_date').valueAsDate = new Date();
+    </script>
+</body>
+</html>

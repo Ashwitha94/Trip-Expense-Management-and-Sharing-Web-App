@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trip Expense Management & Sharing</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom py-3">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="index.html">
+                <i class="fas fa-plane-departure text-warning"></i>
+                <span>TripSplitter</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center gap-2">
+                    <li class="nav-item"><a class="nav-link text-white fw-semibold" href="login.html">Login</a></li>
+                    <li class="nav-item">
+                        <a class="btn btn-warning fw-bold px-4 rounded-pill shadow" href="register.html">Get Started</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero-section text-center">
+        <div class="container">
+            <h1 class="hero-title">Manage Your Trip Expenses Easily</h1>
+            <p class="hero-subtitle">
+                Track expenses, split costs seamlessly, and generate simplified settlements for Paris, Switzerland, Beaches, Holy Places & World Trips!
+            </p>
+            <div class="d-flex justify-content-center gap-3">
+                <a href="register.html" class="btn btn-warning btn-lg fw-bold px-4 py-3 rounded-pill shadow-lg">
+                    <i class="fas fa-rocket me-2"></i>Get Started Free
+                </a>
+                <a href="login.html" class="btn btn-outline-light btn-lg fw-bold px-4 py-3 rounded-pill">
+                    <i class="fas fa-sign-in-alt me-2"></i>Login
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Featured Travel Destinations Gallery -->
+    <section class="py-5 bg-white">
+        <div class="container py-2">
+            <div class="text-center mb-5">
+                <span class="badge bg-primary-subtle text-primary fw-bold text-uppercase px-3 py-2 rounded-pill mb-2">Explore Worldwide Destinations</span>
+                <h2 class="fw-extrabold display-6">Attractive Themes for Every Dream Journey</h2>
+                <p class="text-muted fs-5">Pick beautiful cover photos for Paris, Switzerland, Holy Places, Beaches & Mountain Escapes.</p>
+            </div>
+
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                <!-- Card 1: Paris -->
+                <div class="col">
+                    <div class="card card-custom h-100 shadow-sm border-0">
+                        <img src="images/paris.jpg" class="card-img-top" style="height:220px; object-fit:cover;" alt="Paris, France">
+                        <div class="card-body">
+                            <span class="badge bg-danger mb-2"><i class="fas fa-landmark me-1"></i>France</span>
+                            <h5 class="fw-bold mb-1">Paris & European Cities</h5>
+                            <p class="text-muted small mb-0">Eiffel Tower, Seine river cruises, cafes & culture.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2: Switzerland -->
+                <div class="col">
+                    <div class="card card-custom h-100 shadow-sm border-0">
+                        <img src="images/switzerland.jpg" class="card-img-top" style="height:220px; object-fit:cover;" alt="Switzerland Alps">
+                        <div class="card-body">
+                            <span class="badge bg-primary mb-2"><i class="fas fa-mountain me-1"></i>Switzerland</span>
+                            <h5 class="fw-bold mb-1">Swiss Alps & Chalets</h5>
+                            <p class="text-muted small mb-0">Zurich, Interlaken, ski resorts & alpine meadows.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3: Holy Places -->
+                <div class="col">
+                    <div class="card card-custom h-100 shadow-sm border-0">
+                        <img src="images/holy_places.jpg" class="card-img-top" style="height:220px; object-fit:cover;" alt="Holy Places">
+                        <div class="card-body">
+                            <span class="badge bg-warning text-dark mb-2"><i class="fas fa-place-of-worship me-1"></i>Spiritual</span>
+                            <h5 class="fw-bold mb-1">Holy Places & Pilgrimages</h5>
+                            <p class="text-muted small mb-0">Varanasi, Haridwar, Golden Temple, Kedarnath & sacred Yatra trips.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 4: Tropical Beach -->
+                <div class="col">
+                    <div class="card card-custom h-100 shadow-sm border-0">
+                        <img src="images/beach.jpg" class="card-img-top" style="height:220px; object-fit:cover;" alt="Tropical Beach">
+                        <div class="card-body">
+                            <span class="badge bg-success mb-2"><i class="fas fa-umbrella-beach me-1"></i>Beaches</span>
+                            <h5 class="fw-bold mb-1">Tropical Beach Vacations</h5>
+                            <p class="text-muted small mb-0">Goa beaches, Maldives, Bali & Andaman islands.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 5: Mountains -->
+                <div class="col">
+                    <div class="card card-custom h-100 shadow-sm border-0">
+                        <img src="images/mountains.jpg" class="card-img-top" style="height:220px; object-fit:cover;" alt="Mountains">
+                        <div class="card-body">
+                            <span class="badge bg-info mb-2"><i class="fas fa-hiking me-1"></i>Adventure</span>
+                            <h5 class="fw-bold mb-1">Manali & Himalayan Treks</h5>
+                            <p class="text-muted small mb-0">Manali, Shimla, Leh-Ladakh & hill stations.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 6: Desert -->
+                <div class="col">
+                    <div class="card card-custom h-100 shadow-sm border-0">
+                        <img src="images/desert.jpg" class="card-img-top" style="height:220px; object-fit:cover;" alt="Desert Safari">
+                        <div class="card-body">
+                            <span class="badge bg-secondary mb-2"><i class="fas fa-sun me-1"></i>Desert</span>
+                            <h5 class="fw-bold mb-1">Desert Safaris & Forts</h5>
+                            <p class="text-muted small mb-0">Rajasthan, Jaisalmer dunes, Dubai desert safari.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-5 bg-light">
+        <div class="container py-4">
+            <div class="text-center mb-5">
+                <h2 class="fw-800 display-6">Everything You Need for Group Travel Expenses</h2>
+                <p class="text-muted fs-5">No more awkward conversations or messy spreadsheets.</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-3">
+                    <div class="card card-custom h-100 p-4 text-center">
+                        <div class="mb-3 text-primary">
+                            <i class="fas fa-map-marked-alt fa-3x"></i>
+                        </div>
+                        <h4 class="fw-bold mb-2">Create Trips</h4>
+                        <p class="text-muted small mb-0">Organize expenses by vacation, weekend getaway, or road trip with custom members.</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card card-custom h-100 p-4 text-center">
+                        <div class="mb-3 text-info">
+                            <i class="fas fa-receipt fa-3x"></i>
+                        </div>
+                        <h4 class="fw-bold mb-2">Track Expenses</h4>
+                        <p class="text-muted small mb-0">Log costs with categories, date, notes, payer, and custom participant selections.</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card card-custom h-100 p-4 text-center">
+                        <div class="mb-3 text-warning">
+                            <i class="fas fa-calculator fa-3x"></i>
+                        </div>
+                        <h4 class="fw-bold mb-2">Auto-Split Bills</h4>
+                        <p class="text-muted small mb-0">Backend automatically computes exact share ratios for all selected trip members.</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card card-custom h-100 p-4 text-center">
+                        <div class="mb-3 text-success">
+                            <i class="fas fa-hand-holding-usd fa-3x"></i>
+                        </div>
+                        <h4 class="fw-bold mb-2">Simplify Settlements</h4>
+                        <p class="text-muted small mb-0">Smart debt-simplification algorithm reduces payment steps to the absolute minimum.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="text-center py-4">
+        <div class="container">
+            <p class="mb-0">&copy; 2026 TripSplitter App. Built with Python Flask & Bootstrap 5.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/auth.js"></script>
+</body>
+</html>
