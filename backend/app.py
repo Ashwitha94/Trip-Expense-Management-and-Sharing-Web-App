@@ -59,6 +59,11 @@ def create_app():
 
     with app.app_context():
         db.create_all()
+        # Seed demo user and sample trips automatically if missing
+        from backend.models.user import User
+        from backend.database.seed import seed_database
+        if not User.query.filter_by(email="demo@example.com").first():
+            seed_database()
 
     return app
 
