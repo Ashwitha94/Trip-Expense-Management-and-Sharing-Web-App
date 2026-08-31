@@ -1,7 +1,7 @@
 // API Configuration and Global Utility Helpers
-const API_BASE_URL = window.location.origin.includes('5000') || window.location.origin.includes('http')
-    ? `${window.location.origin}/api`
-    : 'http://127.0.0.1:5000/api';
+const API_BASE_URL =( window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+  ? 'http://127.0.0.1:5000/api'
+  : 'https://trip-expense-management-and-sharing-web.onrender.com/api';
 
 /**
  * Fetch wrapper for API calls with automatic Authorization token handling
